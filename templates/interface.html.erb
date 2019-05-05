@@ -1,0 +1,103 @@
+
+<html>
+<head>
+<title>REAPER control (basic)</title>
+
+<style type="text/css">
+  body {
+    background-color: #000;
+    color: #fff;
+  }
+  a, a:visited {
+    color: white;
+    font-family: sans-serif;
+  }
+</style>
+
+<script src="main.js"></script>
+
+<script type="text/javascript">
+
+var commands = {
+  <% @scripts.each do |script| %>
+    <%= script.name %>: '<%= script.command_id %>'<%= script == @scripts.last ? '' : ',' %>
+  <% end %>
+};
+
+function wwr_onreply(results) {
+  console.log(results)
+}
+
+function changeLoop(event) {
+  var name = event.target.options[event.target.selectedIndex].value;
+  chooseLoop(name);
+}
+
+function chooseLoop(name) {
+  var all = document.getElementById('all');
+  all.style.display = 'none';
+  var loop = document.getElementById(name);
+  loop.style.display = 'block';
+}
+
+function init() {
+  var choose = window.location.hash.replace('#', '')
+  if (choose !== '') {
+    chooseLoop(choose);
+  }
+}
+
+wwr_start();
+
+</script>
+
+</head>
+<body onload="init()">
+  <div id="all">
+    <table>
+      <thead>
+        <tr>
+          <% grid.each do |column| %>
+            <th><%= column[:kind] %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% each_row do |row| %>
+          <tr>
+            <% row.each do |script| %>
+              <td>
+                <a href="#" onClick="wwr_req('<%= (script.command_id || (raise "No command ID for #{script.name}")) %>')"><%= script.name %></a>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h3>Focus</h3>
+    <form onSubmit="return false;">    
+      <select id="focus_choice" onchange="changeLoop(event)">
+        <option value="">Choose one...</option>
+        <% grid.each do |column| %>        
+          <optgroup label="<%= column[:kind] %>">
+            <% column[:scripts].each do |script| %>
+              <% next if script.slot.ident == :stop %>
+              <option value="<%= script.name %>"><%= script.name %></option>
+            <% end %>
+          </optgroup>
+        <% end %>
+      </select>
+    </form>
+  </div>
+  <% grid.each do |column| %>
+    <% column[:scripts].each do |script| %>
+      <% next if script.slot.ident == :stop %>
+      <div id="<%= script.name %>" style="display:none;">
+        <p><a href="#" onClick="wwr_req('<%= (script.command_id || (raise "No command ID for #{script.name}")) %>')"><%= script.name %></a></p>
+        <% stop_script = find_stop(script) %>
+        <p><a href="#" onClick="wwr_req('<%= stop_script.command_id %>')"><%= stop_script.name %></a></p>
+      </div>
+    <% end %>
+  <% end %>
+</body>
+</html>

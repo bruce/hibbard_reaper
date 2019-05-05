@@ -1,0 +1,2 @@
+-- <%= @slot %> sends note <%= @note %>
+reaper.StuffMIDIMessage(0, '0x9'..string.format("%x", 0), <%= @note %>, 127)
