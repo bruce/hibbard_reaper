@@ -7,11 +7,42 @@
   body {
     background-color: #000;
     color: #fff;
+    min-height: 100%;
   }
   a, a:visited {
     color: white;
     font-family: sans-serif;
   }
+
+  .drum_01  { background-color: rgb(128, 218, 2); }
+  .perc_01  { background-color: rgb(45,  254, 0); }
+  .bass_01  { background-color: rgb(24,	206, 23); }
+  .chord_01 { background-color: rgb(8,   158, 12); }
+  .lead_01  { background-color: rgb(12,  110, 15); }
+
+  .drum_02  { background-color: rgb(223, 170, 1); }
+  .perc_02  { background-color: rgb(255, 159, 7); }
+  .bass_02  { background-color: rgb(255, 137, 0); }
+  .chord_02 { background-color: rgb(253, 91,  3); }
+  .lead_02  { background-color: rgb(212, 68,  0); }
+
+  .drum_03  { background-color: rgb(230, 6,  177); }
+  .perc_03  { background-color: rgb(241, 0,  250); }
+  .bass_03  { background-color: rgb(190, 22, 210); }
+  .chord_03 { background-color: rgb(76,  2,  93 ); }
+  .lead_03  { background-color: rgb(93,  1,  136); }
+
+  .drum_04  { background-color: rgb(4,  252, 213); }
+  .perc_04  { background-color: rgb(1,  214, 255); }
+  .bass_04  { background-color: rgb(20, 143, 213); }
+  .chord_04 { background-color: rgb(23, 65,  218); }
+  .lead_04  { background-color: rgb(0,  8,   203); }
+
+  .drum_05  { background-color: rgb(152, 253, 6); }
+  .perc_05  { background-color: rgb(51,  250, 9); }
+  .bass_05  { background-color: rgb(18,  212, 22); }
+  .chord_05 { background-color: rgb(13,  157, 3); }
+  .lead_05  { background-color: rgb(10,  112, 9); }
 </style>
 
 <script src="main.js"></script>
@@ -30,14 +61,42 @@ function wwr_onreply(results) {
 
 function changeLoop(event) {
   var name = event.target.options[event.target.selectedIndex].value;
+  event.stopPropagation();
+  event.preventDefault();
   chooseLoop(name);
 }
+
+function stopName(name) {
+  return name.replace(/_\d+$/, '_stop');
+}
+
+var timer = 0;
+var delay = 200;
+var prevent = false;
 
 function chooseLoop(name) {
   var all = document.getElementById('all');
   all.style.display = 'none';
-  var loop = document.getElementById(name);
-  loop.style.display = 'block';
+  document.body.classList.add(name);
+  document.addEventListener('click', function(e) {
+    timer = setTimeout(function() {
+      if (!prevent) {
+        wwr_req(commands[name]);
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      prevent = false;
+    }, delay);
+
+  });
+  document.addEventListener('dblclick', function(e) {
+    clearTimeout(timer);
+    prevent = true;
+    wwr_req(commands[stopName(name)]);
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
 }
 
 function init() {
@@ -89,15 +148,5 @@ wwr_start();
       </select>
     </form>
   </div>
-  <% grid.each do |column| %>
-    <% column[:scripts].each do |script| %>
-      <% next if script.slot.ident == :stop %>
-      <div id="<%= script.name %>" style="display:none;">
-        <p><a href="#" onClick="wwr_req('<%= (script.command_id || (raise "No command ID for #{script.name}")) %>')"><%= script.name %></a></p>
-        <% stop_script = find_stop(script) %>
-        <p><a href="#" onClick="wwr_req('<%= stop_script.command_id %>')"><%= stop_script.name %></a></p>
-      </div>
-    <% end %>
-  <% end %>
 </body>
 </html>
