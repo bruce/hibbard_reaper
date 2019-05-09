@@ -164,7 +164,7 @@ var prevent = false;
 function chooseLoop(name) {
   var all = document.getElementById('all');
   all.style.display = 'none';
-  document.body.classList.add(name);
+  document.body.className = name;
   document.addEventListener('click', function(e) {
     timer = setTimeout(function() {
       if (!prevent) {
