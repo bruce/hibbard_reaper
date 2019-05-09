@@ -157,6 +157,24 @@ function stopName(name) {
   return name.replace(/_\d+$/, '_stop');
 }
 
+function playSong(number) {  
+  event.stopPropagation();
+  event.preventDefault();
+  Object.keys(commands).forEach(function(name) {
+    if (name.indexOf("_" + number) !== -1) {
+      wwr_req(commands[name]);
+    }
+  })
+}
+
+function stopAll(name) {  
+  event.stopPropagation();
+  event.preventDefault();
+  <% @scripts.select { |s| s.name =~ /_stop$/ }.map(&:command_id).each do |cmd| %>
+    wwr_req('<%= cmd %>');
+  <% end %>
+}
+
 var timer = 0;
 var delay = 200;
 var prevent = false;
@@ -189,6 +207,7 @@ wwr_start();
           <% grid.each do |column| %>
             <th><%= column[:kind] %></th>
           <% end %>
+          <th>all</th>
         </tr>
       </thead>
       <tbody>
@@ -199,10 +218,18 @@ wwr_start();
                 <a href="#" onClick="wwr_req('<%= (script.command_id || (raise "No command ID for #{script.name}")) %>')"><%= script.name %></a>
               </td>
             <% end %>
-          </tr>
+            <td>
+              <% song_num = row.first.name.sub(/^.*?_/, '') %>
+              <% next if song_num == 'stop' %>
+              <a href="#" onClick="playSong('<%= song_num %>')">play <%= song_num %></a>
+            </td>
+          </tr> 
         <% end %>
       </tbody>
     </table>
+    <p>
+      <a href="#" onClick="stopAll()">STOP ALL</a>
+    </p>
     <h3>Focus</h3>
     <form onSubmit="return false;">    
       <select id="focus_choice" onchange="changeLoop(event)">
