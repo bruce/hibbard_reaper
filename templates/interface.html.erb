@@ -8,41 +8,122 @@
     background-color: #000;
     color: #fff;
     min-height: 100%;
+    padding: 0;
+    margin: 0;
   }
   a, a:visited {
     color: white;
     font-family: sans-serif;
   }
 
-  .drum_01  { background-color: rgb(128, 218, 2); }
-  .perc_01  { background-color: rgb(45,  254, 0); }
-  .bass_01  { background-color: rgb(24,	206, 23); }
-  .chord_01 { background-color: rgb(8,   158, 12); }
-  .lead_01  { background-color: rgb(12,  110, 15); }
+  body { -webkit-touch-callout: none !important; }
+  a { -webkit-user-select: none !important; }
 
-  .drum_02  { background-color: rgb(223, 170, 1); }
-  .perc_02  { background-color: rgb(255, 159, 7); }
-  .bass_02  { background-color: rgb(255, 137, 0); }
-  .chord_02 { background-color: rgb(253, 91,  3); }
-  .lead_02  { background-color: rgb(212, 68,  0); }
+  body.drum_01  { background-color: rgb(128, 218, 2); }
+  body.perc_01  { background-color: rgb(45,  254, 0); }
+  body.bass_01  { background-color: rgb(24,	206, 23); }
+  body.chord_01 { background-color: rgb(8,   158, 12); }
+  body.lead_01  { background-color: rgb(12,  110, 15); }
 
-  .drum_03  { background-color: rgb(230, 6,  177); }
-  .perc_03  { background-color: rgb(241, 0,  250); }
-  .bass_03  { background-color: rgb(190, 22, 210); }
-  .chord_03 { background-color: rgb(76,  2,  93 ); }
-  .lead_03  { background-color: rgb(93,  1,  136); }
+  body.drum_02  { background-color: rgb(223, 170, 1); }
+  body.perc_02  { background-color: rgb(255, 159, 7); }
+  body.bass_02  { background-color: rgb(255, 137, 0); }
+  body.chord_02 { background-color: rgb(253, 91,  3); }
+  body.lead_02  { background-color: rgb(212, 68,  0); }
 
-  .drum_04  { background-color: rgb(4,  252, 213); }
-  .perc_04  { background-color: rgb(1,  214, 255); }
-  .bass_04  { background-color: rgb(20, 143, 213); }
-  .chord_04 { background-color: rgb(23, 65,  218); }
-  .lead_04  { background-color: rgb(0,  8,   203); }
+  body.drum_03  { background-color: rgb(230, 6,  177); }
+  body.perc_03  { background-color: rgb(241, 0,  250); }
+  body.bass_03  { background-color: rgb(190, 22, 210); }
+  body.chord_03 { background-color: rgb(76,  2,  93 ); }
+  body.lead_03  { background-color: rgb(93,  1,  136); }
 
-  .drum_05  { background-color: rgb(152, 253, 6); }
-  .perc_05  { background-color: rgb(51,  250, 9); }
-  .bass_05  { background-color: rgb(18,  212, 22); }
-  .chord_05 { background-color: rgb(13,  157, 3); }
-  .lead_05  { background-color: rgb(10,  112, 9); }
+  body.drum_04  { background-color: rgb(4,  252, 213); }
+  body.perc_04  { background-color: rgb(1,  214, 255); }
+  body.bass_04  { background-color: rgb(20, 143, 213); }
+  body.chord_04 { background-color: rgb(23, 65,  218); }
+  body.lead_04  { background-color: rgb(0,  8,   203); }
+
+  body.drum_05  { background-color: rgb(152, 253, 6); }
+  body.perc_05  { background-color: rgb(51,  250, 9); }
+  body.bass_05  { background-color: rgb(18,  212, 22); }
+  body.chord_05 { background-color: rgb(13,  157, 3); }
+  body.lead_05  { background-color: rgb(10,  112, 9); }
+
+  .start, .stop {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .start {
+    height: 60%;
+  }
+
+  .stop {
+    height: 40%;    
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .start a {
+    height: 76%;
+    line-height: 76%;
+    padding-top: 20%;
+  }
+  .stop a {
+    height: 90%;
+    line-height: 90%;
+    padding-top: 10%;
+  }
+
+  .start a,
+  .start a:visited,
+  .stop a,
+  .stop a:visited {
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 40px;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 0 0 3px black;
+  }
+
+  /* Display */
+
+  .loop { display: none; }
+
+  body.drum_01 #drum_01.loop  { display: block; }
+  body.perc_01 #perc_01.loop  { display: block; }
+  body.bass_01 #bass_01.loop  { display: block; }
+  body.chord_01 #chord_01.loop { display: block; }
+  body.lead_01 #lead_01.loop  { display: block; }
+
+  body.drum_02 #drum_02.loop  { display: block; }
+  body.perc_02 #perc_02.loop  { display: block; }
+  body.bass_02 #bass_02.loop  { display: block; }
+  body.chord_02 #chord_02.loop { display: block; }
+  body.lead_02 #lead_02.loop  { display: block; }
+
+  body.drum_03 #drum_03.loop  { display: block; }
+  body.perc_03 #perc_03.loop  { display: block; }
+  body.bass_03 #bass_03.loop  { display: block; }
+  body.chord_03 #chord_03.loop { display: block; }
+  body.lead_03 #lead_03.loop  { display: block; }
+
+  body.drum_04 #drum_04.loop  { display: block; }
+  body.perc_04 #perc_04.loop  { display: block; }
+  body.bass_04 #bass_04.loop  { display: block; }
+  body.chord_04 #chord_04.loop { display: block; }
+  body.lead_04 #lead_04.loop  { display: block; }
+
+  body.drum_05 #drum_05.loop  { display: block; }
+  body.perc_05 #perc_05.loop  { display: block; }
+  body.bass_05 #bass_05.loop  { display: block; }
+  body.chord_05 #chord_05.loop { display: block; }
+  body.lead_05 #lead_05.loop  { display: block; }
+
 </style>
 
 <script src="main.js"></script>
@@ -55,8 +136,14 @@ var commands = {
   <% end %>
 };
 
+function run(event, cmd) {
+  wwr_req(cmd);
+  event.preventDefault();
+  event.stopPropagation();
+}
+
 function wwr_onreply(results) {
-  console.log(results)
+  
 }
 
 function changeLoop(event) {
@@ -109,7 +196,8 @@ function init() {
 wwr_start();
 
 </script>
-
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimal-ui" />
 </head>
 <body onload="init()">
   <div id="all">
@@ -148,5 +236,15 @@ wwr_start();
       </select>
     </form>
   </div>
+  <% grid.each do |column| %>
+    <% column[:scripts].each do |script| %>
+      <% next if script.slot.ident == :stop %>
+      <div id="<%= script.name %>" class="loop">
+        <div class="start"><a href="#" onClick="run(event, '<%= (script.command_id || (raise "No command ID for #{script.name}")) %>')">START</a></div>
+        <% stop_script = find_stop(script) %>
+        <div class="stop"><a href="#" onClick="run(event, '<%= stop_script.command_id %>')">STOP</a></div>
+      </div>
+    <% end %>
+  <% end %>  
 </body>
 </html>
