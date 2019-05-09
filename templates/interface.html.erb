@@ -165,25 +165,6 @@ function chooseLoop(name) {
   var all = document.getElementById('all');
   all.style.display = 'none';
   document.body.className = name;
-  document.addEventListener('click', function(e) {
-    timer = setTimeout(function() {
-      if (!prevent) {
-        wwr_req(commands[name]);
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      prevent = false;
-    }, delay);
-
-  });
-  document.addEventListener('dblclick', function(e) {
-    clearTimeout(timer);
-    prevent = true;
-    wwr_req(commands[stopName(name)]);
-    e.preventDefault();
-    e.stopPropagation();
-  });
-
 }
 
 function init() {
